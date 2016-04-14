@@ -21,7 +21,3 @@ development:
 test:
   <<: *default
   database: jwtsso_test
-
-production:
-  <<: *default
-  database: jwtsso_production
