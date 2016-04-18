@@ -6,6 +6,13 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
-  devise_for :users, controllers: { sessions: "users/sessions" }
+  devise_for :users, path: "",
+    path_names: {sign_in: "login", sign_out: "logout", registration: "profile"},
+    controllers: { sessions: "users/sessions" }
+
+  as :user do
+    get 'logout', to: 'users/sessions#destroy'
+  end
+
   get '/itglue_signin', to: 'itglue_session#create'
 end
