@@ -1,7 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
 require 'jwt'
-  # POST /users/sign_in
-  def create
+  def new
+    session[:return_to] = params[:return_to]
     super
   end
 end

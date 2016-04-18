@@ -10,7 +10,7 @@ class ItglueSessionController < ApplicationController
   ITGLUE_SUBDOMAIN     = "deversus"
 
   def create
-    user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path, return_to: params[:return_to])
+    user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path(return_to: params[:return_to]))
   end
 
   private
