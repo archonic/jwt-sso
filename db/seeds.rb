@@ -10,3 +10,7 @@
 User.create(email: "jmark@itglue.com", password: "password")
 User.create(email: "mwalsh@itglue.com", password: "password")
 User.create(email: "tfeeney@itglue.com", password: "password")
+User.create(email: "asanudo@itglue.com", password: "password")
+User.create(email: "jzhang@itglue.com", password: "password")
+User.create(email: "gsingh@itglue.com", password: "password")
+User.create(email: "nmerchant@itglue.com", password: "password")
