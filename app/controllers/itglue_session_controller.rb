@@ -30,9 +30,12 @@ class ItglueSessionController < ApplicationController
   end
 
   def itglue_sso_url(payload)
-    url = (Rails.env == "development") ? "http://#{ITGLUE_SUBDOMAIN}.archonicdev.com:3000/access/jwt?jwt=#{payload}" : "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}"
-    #url = "http://#{ITGLUE_SUBDOMAIN}.archonicdev.com:3000/access/jwt?jwt=#{payload}"
-    url += "&return_to=#{URI.escape(params["return_to"])}" if params["return_to"].present?
-    url
+    if Rails.env == "development"
+      url = "http://#{ITGLUE_SUBDOMAIN}.archonicdev.com:3000/access/jwt?jwt=#{payload}"
+    else
+      url = "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}"
+    end
+    url << "&return_to=#{URI.encode(params[:return_to], URI::PATTERN::RESERVED)}" if params[:return_to].present?
+    #url
   end
 end
