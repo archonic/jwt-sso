@@ -1,7 +1,5 @@
 # Using JWT from Ruby is straight forward. The below example expects you to have `jwt`
 # in your Gemfile, you can read more about that gem at https://github.com/progrium/ruby-jwt.
-# Assuming that you've set your shared secret and Zendesk subdomain in the environment, you
-# can use Zendesk SSO from your controller like this example.
 require 'securerandom' unless defined?(SecureRandom)
 
 class ItglueSessionController < ApplicationController
@@ -31,11 +29,11 @@ class ItglueSessionController < ApplicationController
 
   def itglue_sso_url(payload)
     if Rails.env == "development"
-      url = "http://#{ITGLUE_SUBDOMAIN}.archonicdev.com:3000/access/jwt?jwt=#{payload}"
-    else
       url = "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}"
+    else
+      url = "https://fm.staging.itglue.com/access/jwt?jwt=#{payload}"
     end
     url << "&return_to=#{URI.encode(params[:return_to], URI::PATTERN::RESERVED)}" if params[:return_to].present?
-    #url
+    url
   end
 end
