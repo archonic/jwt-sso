@@ -8,6 +8,8 @@ class ItglueSessionController < ApplicationController
   ITGLUE_SUBDOMAIN     = "deversus"
 
   def create
+    default_return = Rails.env == "development" ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" : "https://fm.staging.itglue.com"
+    params[:return_to] ||= default_return
     user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path(return_to: params[:return_to]))
   end
 
