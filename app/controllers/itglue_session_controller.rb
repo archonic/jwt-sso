@@ -30,7 +30,7 @@ class ItglueSessionController < ApplicationController
   end
 
   def itglue_sso_url(payload)
-    url = "https://deversus.itglue.localhost:3000/access/jwt?jwt=#{payload}" # "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}"
+    url = "http://deversus.itglue.localhost:3000/access/jwt?jwt=#{payload}" # "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}"
     url << "&return_to=#{URI.encode(params[:return_to], URI::PATTERN::RESERVED)}" if params[:return_to].present?
     url
   end
