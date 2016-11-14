@@ -8,7 +8,7 @@ class ItglueSessionController < ApplicationController
   ITGLUE_SUBDOMAIN     = "deversus"
 
   def create
-    default_return = "https://deversus.staging.itglue.com" #"http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000"
+    default_return = "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" # https://deversus.staging.itglue.com
     params[:return_to] ||= default_return
     user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path(return_to: params[:return_to]))
   end
@@ -30,7 +30,7 @@ class ItglueSessionController < ApplicationController
   end
 
   def itglue_sso_url(payload)
-    url = "https://deversus.staging.itglue.com/access/jwt?jwt=#{payload}" # "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}"
+    url = "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}" # https://deversus.staging.itglue.com/access/jwt?jwt=#{payload}
     url << "&return_to=#{URI.encode(params[:return_to], URI::PATTERN::RESERVED)}" if params[:return_to].present?
     url
   end
