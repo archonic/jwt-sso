@@ -1,5 +1,5 @@
 # Using JWT from Ruby is straight forward. The below example expects you to have `jwt`
-# in your Gemfile, you can read more about that gem at https://github.com/progrium/ruby-jwt.
+# in your Gemfile, you can read more about that gem at https://github.com/jwt/ruby-jwt.
 require 'securerandom' unless defined?(SecureRandom)
 
 class ItglueSessionController < ApplicationController
@@ -10,7 +10,7 @@ class ItglueSessionController < ApplicationController
   def create
     default_return = "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" # https://deversus.staging.itglue.com
     params[:return_to] ||= default_return
-    user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path(return_to: params[:return_to]))
+    user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path)
   end
 
   private
