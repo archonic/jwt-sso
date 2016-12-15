@@ -10,7 +10,8 @@ class ItglueSessionController < ApplicationController
   def create
     default_return = "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" # https://deversus.staging.itglue.com
     params[:return_to] ||= default_return
-    user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path)
+    params[:return_to] = nil if params[:return_to] == '/itglue_signin' # avoid redirect loop
+    user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path(return_to: '/itglue_signin'))
   end
 
   private
