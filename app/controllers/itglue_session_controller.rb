@@ -8,7 +8,9 @@ class ItglueSessionController < ApplicationController
   ITGLUE_SUBDOMAIN     = "deversus"
 
   def create
+    puts "PARAMS ENV IS #{params[:env]}"
     session[:env] = params[:env]
+    puts "SESSION ENV IS #{session[:env]}"
     default_return = session[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com"
     params[:return_to] ||= default_return
     params[:return_to] = nil if params[:return_to] == '/itglue_signin' # avoid redirect loop
@@ -32,6 +34,8 @@ class ItglueSessionController < ApplicationController
   end
 
   def itglue_sso_url(payload)
+    puts "PARAMS ENV IS #{params[:env]}"
+    puts "SESSION ENV IS #{session[:env]}"
     url = session[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com/access/jwt?jwt=#{payload}"
     url << "&return_to=#{URI.encode(params[:return_to], URI::PATTERN::RESERVED)}" if params[:return_to].present?
     url
