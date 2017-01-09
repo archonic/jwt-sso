@@ -9,7 +9,7 @@ class ItglueSessionController < ApplicationController
 
   def create
     puts "PARAMS ENV IS #{params[:env]}"
-    session[:env] = params[:env]
+    session[:env] ||= params[:env]
     puts "SESSION ENV IS #{session[:env]}"
     default_return = session[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com"
     params[:return_to] ||= default_return
