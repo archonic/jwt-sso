@@ -8,7 +8,8 @@ class ItglueSessionController < ApplicationController
   ITGLUE_SUBDOMAIN     = "deversus"
 
   def create
-    default_return = params[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com"
+    session[:env] = params[:env]
+    default_return = session[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com"
     params[:return_to] ||= default_return
     params[:return_to] = nil if params[:return_to] == '/itglue_signin' # avoid redirect loop
     user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path(return_to: '/itglue_signin'))
@@ -31,7 +32,7 @@ class ItglueSessionController < ApplicationController
   end
 
   def itglue_sso_url(payload)
-    url = params[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com/access/jwt?jwt=#{payload}"
+    url = session[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000/access/jwt?jwt=#{payload}" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com/access/jwt?jwt=#{payload}"
     url << "&return_to=#{URI.encode(params[:return_to], URI::PATTERN::RESERVED)}" if params[:return_to].present?
     url
   end
