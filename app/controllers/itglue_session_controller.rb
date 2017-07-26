@@ -5,7 +5,7 @@ require 'securerandom' unless defined?(SecureRandom)
 class ItglueSessionController < ApplicationController
   # Configuration
   ITGLUE_SHARED_SECRET = ENV["ITGLUE_SHARED_SECRET"]
-  ITGLUE_SUBDOMAIN     = "deversus"
+  ITGLUE_SUBDOMAIN     = 'deversus'
 
   def create
     puts "PARAMS ENV IS #{params[:env]}"
@@ -16,7 +16,7 @@ class ItglueSessionController < ApplicationController
     when 'dev'
       "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000"
     when 'qa'
-      "http://#{ITGLUE_SUBDOMAIN}.qa.itglue.com"
+      'https://fm.qa.itglue.com'
     else
       "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com"
     end
