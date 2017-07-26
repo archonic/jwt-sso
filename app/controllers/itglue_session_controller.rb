@@ -11,7 +11,16 @@ class ItglueSessionController < ApplicationController
     puts "PARAMS ENV IS #{params[:env]}"
     session[:env] ||= params[:env]
     puts "SESSION ENV IS #{session[:env]}"
-    default_return = session[:env] == 'dev' ? "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000" : "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com"
+
+    default_return = case session[:env]
+    when 'dev'
+      "http://#{ITGLUE_SUBDOMAIN}.itglue.localhost:3000"
+    when 'qa'
+      "http://#{ITGLUE_SUBDOMAIN}.qa.itglue.com"
+    else
+      "https://#{ITGLUE_SUBDOMAIN}.staging.itglue.com"
+    end
+
     params[:return_to] ||= default_return
     params[:return_to] = nil if params[:return_to] == '/itglue_signin' # avoid redirect loop
     user_signed_in? ? sign_into_itglue(current_user) : redirect_to(new_user_session_path(return_to: '/itglue_signin', env: params[:env]))
