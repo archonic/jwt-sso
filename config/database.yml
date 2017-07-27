@@ -11,8 +11,9 @@ default: &default
 
 development:
   <<: *default
-  username: jwtsso
-  password: password1
+  adapter: sqlite3
+  # username: jwtsso
+  # password: password1
   database: jwtsso_development
 
 # Warning: The database defined as "test" will be erased and
