@@ -59,7 +59,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Auth
-gem 'devise', '4.0.0.rc2'
+gem 'devise', '4.6.0'
 
 # ITGlue Single Sign-On
 gem 'jwt'
